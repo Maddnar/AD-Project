@@ -22,9 +22,15 @@ The objective of this project was to design and connect a multi–virtual machin
 
 ## Lab Architecture
 
-The lab environment consisted of four virtual machines connected via a NAT network in VirtualBox. Each VM was assigned a specific role to support Active Directory, log collection, and security simulation.
+<img src="images/Active_Directory_Project_Diagram.png" align="left" width="600"/>
 
-![Lab Network Diagram](images/Active Directory Project Diagram.drawio.png)
+The lab environment consisted of four virtual machines connected via a NAT network in VirtualBox. Each VM was assigned a specific role to support Active Directory, log collection, and security simulation. <p style="margin-left: 2em;"> 
+   The diagram to the left shows the network architecture that I made on Draw.io. The dotted lines coming from the Windows 10 machine and Windows Server indicate their connection to the Splunk server via the Splunk Universal forwarder. The lab consisted of four virtual machines connected through a NAT network configured in VirtualBox. The Windows server hosted the Active Directory and DNS services, while the Windows 10 VM acted as a client as well as a target for the Kali Linux machine. Ubuntu ran the Splunk server for event log collection.
+</p>
+
+<br clear="left"/>
+
 *Figure 1: VirtualBox NAT-based network connecting AD, endpoint, SIEM, and Kali Linux.*
 
-The diagram to the left shows the network architecture that I made on Draw.io. The dotted lines coming from the Windows 10 machine and Windows Server indicate their connection to the Splunk server via the Splunk Universal forwarder. The lab consisted of four virtual machines connected through a NAT network configured in VirtualBox. The Windows server hosted the Active Directory and DNS services, while the Windows 10 VM acted as a client as well as a target for the Kali Linux machine. Ubuntu ran the Splunk server for event log collection.
+## System Configuration and Virtual Machine Setup
+
