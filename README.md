@@ -22,10 +22,10 @@ The objective of this project was to design and connect a multi–virtual machin
 
 ## Lab Architecture
 
-<img src="images/Active_Directory_Project_Diagram.png" align="left" width="600"/>
+<img src="images/Active_Directory_Project_Diagram.png" align="left" width="700"/>
 
-The lab environment consisted of four virtual machines connected via a NAT network in VirtualBox. Each VM was assigned a specific role to support Active Directory, log collection, and security simulation. <p style="margin-left: 2em;"> 
-   The diagram to the left shows the network architecture that I made on Draw.io. The dotted lines coming from the Windows 10 machine and Windows Server indicate their connection to the Splunk server via the Splunk Universal forwarder. The lab consisted of four virtual machines connected through a NAT network configured in VirtualBox. The Windows server hosted the Active Directory and DNS services, while the Windows 10 VM acted as a client as well as a target for the Kali Linux machine. Ubuntu ran the Splunk server for event log collection.
+The lab architecture was designed to emulate a small enterprise network for identity management, monitoring, and attack simulation purposes. <p style="margin-left: 2em;"> 
+   The lab environment consisted of four virtual machines connected through a NAT network in VirtualBox, with each system assigned a specific role to support Active Directory services, centralized log collection, and security testing. The network architecture, illustrated in the diagram created using Draw.io, shows dotted lines extending from the Windows Server and Windows 10 machines to the Splunk server, representing their connections through the Splunk Universal Forwarder. The Windows Server VM hosted Active Directory and DNS services, the Windows 10 VM functioned as a domain-joined client and attack target, the Ubuntu VM ran the Splunk server for event log aggregation, and the Kali Linux VM was used to simulate threat activity.
 </p>
 
 <br clear="left"/>
@@ -34,3 +34,20 @@ The lab environment consisted of four virtual machines connected via a NAT netwo
 
 ## System Configuration and Virtual Machine Setup
 
+I've worked with virtual machines extensively in the National Guard; however, most of those systems are pre-built and pre-configured to communicate upon startup. In contrast, this project required selecting, installing, and configuring each virtual machine manually to ensure proper network connectivity, service functionality, and role separation. When choosing operating systems, I prioritized compatibility with Active Directory, Splunk, and common security tools, as well as overall system stability. VirtualBox was selected as the hypervisor due to its accessibility and support for NAT networking, which allowed the virtual machines to communicate internally while maintaining isolation from the host network.
+
+Due to hardware resource limitations on my laptop, the virtual machines were migrated to a desktop system with greater processing power and memory capacity. This ensured stable performance when running multiple virtual machines simultaneously, particularly during Active Directory operations, log forwarding, and security testing activities. The desktop environment allowed for smoother execution of services and reduced performance bottlenecks observed during initial testing on the laptop.
+
+Each virtual machine was provisioned with appropriate CPU, memory, and storage resources based on its role. The Windows Server VM was configured with Active Directory Domain Services and DNS, the Windows 10 VM was joined to the domain, and the Kali Linux VM was prepared with standard penetration testing tools. The Ubuntu VM was configured to host the Splunk server, so I provisioned it with an extra CPU core and additional RAM, since it would be ingesting traffic from both the Windows server and the Windows client. Network settings were standardized across all machines to ensure consistent communication within the NAT network.
+
+## Service Installation and Configuration
+
+After the virtual machines were provisioned and network connectivity was verified, core services were installed and configured to support authentication, centralized logging, and security monitoring. This included deploying Active Directory Domain Services on the Windows Server, installing Splunk Enterprise on the Ubuntu system, and configuring Splunk Universal Forwarders on the Windows Server and Windows 10 machines to forward traffic logs to the SIEM. These configurations established the foundation for monitoring user activity and detecting malicious behavior.
+
+### Active Directory Domain Services Setup
+
+### Splunk Enterprise Install
+
+### Splunk Universal Forwarder Install
+
+### Endpoint Configuration
