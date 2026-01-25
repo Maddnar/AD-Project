@@ -34,11 +34,22 @@ The lab architecture was designed to emulate a small enterprise network for iden
 
 ## System Configuration and Virtual Machine Setup
 
-I've worked with virtual machines extensively in the National Guard; however, most of those systems are pre-built and pre-configured to communicate upon startup. In contrast, this project required selecting, installing, and configuring each virtual machine manually to ensure proper network connectivity, service functionality, and role separation. When choosing operating systems, I prioritized compatibility with Active Directory, Splunk, and common security tools, as well as overall system stability. VirtualBox was selected as the hypervisor due to its accessibility and support for NAT networking, which enabled virtual machines to communicate internally while remaining isolated from the host network.
+<img src="images/VMs.png" align="right" width="500" vspace="50" hspace="10"/>
 
-Due to hardware limitations on my laptop, the virtual machines were migrated to my desktop computer, which has greater processing power and memory. This ensured stable performance when running multiple virtual machines simultaneously, particularly during Active Directory operations, log forwarding, and security testing activities. The desktop environment enabled smoother service execution and reduced the performance bottlenecks observed during initial testing on the laptop.
+<img src="images/NAT.png" align="left" width="600" vspace="50" hspace="10"/>
+
+I've worked with virtual machines extensively in the National Guard; however, most of those systems are pre-built and pre-configured to communicate upon startup. In contrast, this project required selecting, installing, and configuring each virtual machine manually to ensure proper network connectivity, service functionality, and role separation. When choosing operating systems, I prioritized compatibility with Active Directory, Splunk, and common security tools, as well as overall system stability. VirtualBox was selected as the hypervisor due to its accessibility and support for NAT networking, which enabled virtual machines to communicate internally while remaining isolated from the host network. <p style="margin-left: 1em;" vspace="50">
+
+Due to hardware limitations on my laptop, the virtual machines were migrated to my desktop computer, which has greater processing power and memory. This ensured stable performance when running multiple virtual machines simultaneously, particularly during Active Directory operations, log forwarding, and security testing activities. The desktop environment enabled smoother service execution and reduced the performance bottlenecks observed during initial testing on the laptop. <p style="margin-left: 1em;">
 
 Each virtual machine was provisioned with appropriate CPU, memory, and storage resources based on its role. The Windows Server VM was configured with Active Directory Domain Services and DNS, the Windows 10 VM was joined to the domain, and the Kali Linux VM was prepared with standard penetration testing tools. The Ubuntu VM was configured to host the Splunk server, so I provisioned it with an extra CPU core and additional RAM, since it would be ingesting traffic from both the Windows server and the Windows client. Network settings were standardized across all machines to ensure consistent communication within the NAT network.
+</p>
+
+<br clear="left"/>
+
+*Figure 2: this is the first picture*
+*Figure 3: this is the second picture*
+
 
 ## Service Installation and Configuration
 
