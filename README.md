@@ -34,16 +34,16 @@ The lab architecture was designed to emulate a small enterprise network for iden
 
 ## System Configuration and Virtual Machine Setup
 
-<img src="images/VMs.png" align="right" width="500" vspace="50" hspace="10"/>
+<img src="images/VMs.png" align="right" width="400" vspace="50" hspace="10"/>
 
 <img src="images/NAT.png" align="left" width="600" vspace="50" hspace="10"/>
 
 I've worked with virtual machines extensively in the National Guard; however, most of those systems are pre-built and pre-configured to communicate upon startup. In contrast, this project required selecting, installing, and configuring each virtual machine manually to ensure proper network connectivity, service functionality, and role separation. When choosing operating systems, I prioritized compatibility with Active Directory, Splunk, and common security tools, as well as overall system stability. VirtualBox was selected as the hypervisor due to its accessibility and support for NAT networking, which enabled virtual machines to communicate internally while remaining isolated from the host network. <p style="margin-left: 1em;" vspace="20">
 
-*Figure 2: this is the first picture*
+*Figure 2: Virtual machines running "Base" snapshot*
 
 Due to hardware limitations on my laptop, the virtual machines were migrated to my desktop computer, which has greater processing power and memory. This ensured stable performance when running multiple virtual machines simultaneously, particularly during Active Directory operations, log forwarding, and security testing activities. The desktop environment enabled smoother service execution and reduced the performance bottlenecks observed during initial testing on the laptop. <p style="margin-left: 1em;">
-*Figure 3: this is the second picture*
+*Figure 3: NAT configuration in VirtualBox*
 
 
 Each virtual machine was provisioned with appropriate CPU, memory, and storage resources based on its role. The Windows Server VM was configured with Active Directory Domain Services and DNS, the Windows 10 VM was joined to the domain, and the Kali Linux VM was prepared with standard penetration testing tools. The Ubuntu VM was configured to host the Splunk server, so I provisioned it with an extra CPU core and additional RAM, since it would be ingesting traffic from both the Windows server and the Windows client. Network settings were standardized across all machines to ensure consistent communication within the NAT network.
@@ -61,7 +61,16 @@ After the virtual machines were provisioned and network connectivity was verifie
 
 ### Active Directory Domain Services Setup
 
+
+<img src="images/ADDS_Role.png" align="right" width="550"/>
+<img src="images/domain.png" align="right" width="400"/>
+
+*Figure 4: Windows Server showing Active Directory Domain Services role installed.*
+
 Setting up Active Directory Domain Services was straightforward, thanks to my extensive experience deploying AD during Army training, where I routinely configured domain controllers, user accounts, and group policies in lab environments. For this project, I installed the AD DS role on the Windows Server VM, promoted it to a domain controller, and created a new domain to manage the Windows 10 client. I also configured DNS services to ensure proper name resolution. To organize and manage resources within the domain, I created a new Organizational Unit (OU) named “CompanyOU”, and within this OU, I established two security groups: HR and IT, reflecting typical departmental structures. I then created a user account in each group to represent employees, assigning appropriate group membership and permissions. This setup allowed me to efficiently validate domain functionality, test group-based policies, verify access controls, and generate realistic event logs for Splunk ingestion and monitoring.
+
+
+
 
 ### Splunk Enterprise Install
 
