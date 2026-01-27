@@ -112,4 +112,4 @@ To validate the lab’s monitoring and detection capabilities, I performed contr
 <br clear="both"/>
 
 ### Atomic Red-Team
-
+<img src="images/mitre_main.png" align="left" width="800">
