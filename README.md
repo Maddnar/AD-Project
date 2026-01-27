@@ -69,7 +69,7 @@ After the virtual machines were provisioned and network connectivity was verifie
 
 
 Setting up Active Directory Domain Services was straightforward, thanks to my extensive experience deploying AD during Army training, where I routinely configured domain controllers, user accounts, and group policies in lab environments. For this project, I installed the AD DS role on the Windows Server VM, promoted it to a domain controller, and created a new domain to manage the Windows 10 client. I also configured DNS services to ensure proper name resolution. To organize and manage resources within the domain, I created a new Organizational Unit (OU) named “CompanyOU”, and within this OU, I established two security groups: HR and IT, reflecting typical departmental structures. I then created a user account in each group to represent employees, assigning appropriate group membership and permissions. This setup allowed me to efficiently validate domain functionality, test group-based policies, verify access controls, and generate realistic event logs for Splunk ingestion and monitoring.<p style="margin-left: 2em;">
-*Figure 5: homelab.local domain showing CompanyOU, HR and IT groups, and user Terry Smith.*
+*Figure 5: homelab.local domain showing CompanyOU, HR, and IT groups, and user Terry Smith.*
 <br clear="both"/>
 
 
@@ -105,4 +105,11 @@ On the Windows 10 VM, I updated the network settings to use the Windows Server�
 
 ## Testing and Simulation
 
-To validate the lab’s monitoring and detection capabilities, I performed controlled security simulations using the Kali Linux VM and Atomic Red Team techniques. This included executing safe, simulated attacks such as account creation, login attempts, and basic PowerShell commands mapped to MITRE ATT&CK techniques T1136.001 and T1059.001. The resulting events were forwarded to the Splunk server from both the Windows Server and Windows 10 client, allowing me to confirm that the SIEM accurately ingested logs, indexed events into the “endpoint” index, and displayed relevant information in search results. These tests demonstrated that the lab environment could support detection of user activity changes, group membership modifications, and simulated adversarial behavior, providing practical insight into SIEM visibility, detection coverage, and potential monitoring gaps.
+### Brute Force attack and logs
+<img src="images/kali_attack.png" align="left" width="600">
+<img src="images/attack_log.png" align="left" width="400">
+To validate the lab’s monitoring and detection capabilities, I performed controlled security simulations using the Kali Linux VM and Atomic Red Team techniques. This included executing safe, simulated attacks such as account creation, login attempts, and basic PowerShell commands mapped to MITRE ATT&CK techniques T1136.001 and T1059.001. The resulting events were forwarded to the Splunk server from both the Windows Server and Windows 10 client, allowing me to confirm that the SIEM accurately ingested logs, indexed events into the “endpoint” index, and displayed relevant information in search results. These tests demonstrated that the lab environment could detect user activity changes, group membership modifications, and simulated adversarial behavior, providing practical insight into SIEM visibility, detection coverage, and potential monitoring gaps.
+<br clear="both"/>
+
+### Atomic Red-Team
+
