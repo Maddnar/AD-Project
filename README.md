@@ -61,29 +61,48 @@ After the virtual machines were provisioned and network connectivity was verifie
 
 ### Active Directory Domain Services Setup
 
-
-<img src="images/ADDS_Role.png" align="right" width="550"/>
-<img src="images/domain.png" align="right" width="400"/>
+<img src="images/ADDS_Roles.png" align="right" width="550"/>
 
 *Figure 4: Windows Server showing Active Directory Domain Services role installed.*
 
-Setting up Active Directory Domain Services was straightforward, thanks to my extensive experience deploying AD during Army training, where I routinely configured domain controllers, user accounts, and group policies in lab environments. For this project, I installed the AD DS role on the Windows Server VM, promoted it to a domain controller, and created a new domain to manage the Windows 10 client. I also configured DNS services to ensure proper name resolution. To organize and manage resources within the domain, I created a new Organizational Unit (OU) named “CompanyOU”, and within this OU, I established two security groups: HR and IT, reflecting typical departmental structures. I then created a user account in each group to represent employees, assigning appropriate group membership and permissions. This setup allowed me to efficiently validate domain functionality, test group-based policies, verify access controls, and generate realistic event logs for Splunk ingestion and monitoring.
+<img src="images/domain.png" align="right" width="550"/>
 
+
+Setting up Active Directory Domain Services was straightforward, thanks to my extensive experience deploying AD during Army training, where I routinely configured domain controllers, user accounts, and group policies in lab environments. For this project, I installed the AD DS role on the Windows Server VM, promoted it to a domain controller, and created a new domain to manage the Windows 10 client. I also configured DNS services to ensure proper name resolution. To organize and manage resources within the domain, I created a new Organizational Unit (OU) named “CompanyOU”, and within this OU, I established two security groups: HR and IT, reflecting typical departmental structures. I then created a user account in each group to represent employees, assigning appropriate group membership and permissions. This setup allowed me to efficiently validate domain functionality, test group-based policies, verify access controls, and generate realistic event logs for Splunk ingestion and monitoring.<p style="margin-left: 2em;">
+*Figure 5: homelab.local domain showing CompanyOU, HR and IT groups, and user Terry Smith.*
+<br clear="both"/>
+
+
+<br clear="both"/>
 
 
 
 ### Splunk Enterprise Install
+<img src="images/splunk_stat.png" align="right" width="500">
+<img src="images/splunk_ports.png" align="left" width="700">
 
 Installing Splunk Enterprise on the Ubuntu VM required a learning approach, as I had not previously set up the platform. I consulted the official Splunk documentation and additional online resources to guide the installation and configuration process. Using the command line, I downloaded and installed the Splunk package, started the service, and enabled web interface access. I also configured Splunk to start automatically on boot to ensure the service would remain active across system restarts. Once installed, I configured indexes and verified that the service was ready to receive logs from the Windows Server and Windows 10 machines. This process provided hands-on experience with Linux command-line operations, service management, and the setup of a centralized logging environment.
 
+<img src="images/splunk_home.png" align="left" width="700">
+
+<br clear="both"/>
+
 ### Splunk Universal Forwarder Install
-
+<img src="images/services.png" align="right" width="500">
 Installing the Splunk Universal Forwarder on the Windows Server and Windows 10 client was straightforward, as it followed the standard installation wizard similar to other Windows applications. After installation, I configured the forwarder to send selected event logs—such as Security, System, and Application logs—to the Splunk server on Ubuntu. I verified connectivity and ensured that logs were being received correctly, providing a reliable centralized logging pipeline. This setup allowed the Windows machines to continuously forward telemetry for monitoring and analysis, supporting the detection of user activity, group policy changes, and simulated attack events from the Kali Linux VM.
+<img src="images/splunk_recieving_port.png" align="left" width="700">
 
-### Splunk dashboard configuration
+<br clear="both"/>
 
-After verifying that logs were being forwarded from the Windows Server and Windows 10 VM, I configured the Splunk server to receive data on port 9997, which aligned with the setup in the Universal Forwarders. I also created a new index named “endpoint” to centralize all traffic from the Windows 10 client. Using simple searches like index='endpoint', I was able to monitor key events such as user logins, account creation, and group membership changes. While I did not create custom dashboards, these basic searches provided a clear view of the lab activity and allowed me to track both normal operations and simulated attacks from the Kali Linux VM or Atomic Red Team techniques, helping validate SIEM visibility and detection coverage.
+
 
 ### Endpoint Configuration
-
+<img src="images/win10_ip.png" align="left" width="350">
 On the Windows 10 VM, I updated the network settings to use the Windows Server’s IP address (192.168.10.7) as the DNS server to ensure proper domain name resolution. I then joined the VM to the HomeLab domain and verified connectivity to the domain controller. To confirm that Active Directory was functioning correctly, I tested logging in with one of the previously created users, Terry Smith, which succeeded without issue. This step ensured that the client was fully integrated into the domain, allowing it to participate in group policies, send logs via the Splunk Universal Forwarder, and be included in subsequent security testing.
+<img src="images/win10_domain.png" align="left" width="350">
+
+<br clear="both"/>
+
+## Testing and Simulation
+
+To validate the lab’s monitoring and detection capabilities, I performed controlled security simulations using the Kali Linux VM and Atomic Red Team techniques. This included executing safe, simulated attacks such as account creation, login attempts, and basic PowerShell commands mapped to MITRE ATT&CK techniques T1136.001 and T1059.001. The resulting events were forwarded to the Splunk server from both the Windows Server and Windows 10 client, allowing me to confirm that the SIEM accurately ingested logs, indexed events into the “endpoint” index, and displayed relevant information in search results. These tests demonstrated that the lab environment could support detection of user activity changes, group membership modifications, and simulated adversarial behavior, providing practical insight into SIEM visibility, detection coverage, and potential monitoring gaps.
